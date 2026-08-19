@@ -1,3 +1,6 @@
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+
 from fastapi import Depends, FastAPI, HTTPException, status
 
 # SQLAlchemy is used for a lightweight database
@@ -6,11 +9,22 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 # import reusable database session from module
-from .database import get_db
+from . import models
+from .database import Base, engine, get_db
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    # Create database tables for registered SQLAlchemy models at startup.
+    Base.metadata.create_all(bind=engine)
+    yield
 
 
 # create FastAPI app and set titlr
-app = FastAPI(title="Cybersecurity Awareness Service Desk API")
+app = FastAPI(
+    title="Cybersecurity Awareness Service Desk API",
+    lifespan=lifespan,
+)
 
 
 # root endpoint
