@@ -1,0 +1,11 @@
+# Web API framework.
+fastapi>=0.116,<1.0
+
+# ASGI server used to run the FastAPI app locally.
+uvicorn[standard]>=0.35,<1.0
+
+# Database toolkit used for the SQLite connection.
+sqlalchemy>=2.0,<3.0
+
+# Data validation library used by FastAPI.
+pydantic>=2.0,<3.0
