@@ -49,3 +49,13 @@ After starting the server, open:
 
 - http://127.0.0.1:8000/docs
 - http://127.0.0.1:8000/redoc
+
+## API Endpoints
+
+- `GET /`
+- `GET /health`
+- `POST /tickets`
+- `GET /tickets`
+- `GET /tickets/{ticket_id}`
+- `PATCH /tickets/{ticket_id}`
+- `DELETE /tickets/{ticket_id}`
