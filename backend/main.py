@@ -8,7 +8,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-# Import models so Base.metadata knows which tables to create.
+# Import models so Base.metadata knows which tables to create
 from . import models
 from .database import Base, engine, get_db
 from .routes import tickets
@@ -16,7 +16,7 @@ from .routes import tickets
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    # Create database tables for registered SQLAlchemy models at startup.
+    # Create database tables for registered SQLAlchemy models at startup
     Base.metadata.create_all(bind=engine)
     yield
 
@@ -26,7 +26,7 @@ app = FastAPI(
     title="Cybersecurity Awareness Service Desk API",
     lifespan=lifespan,
 )
-# Register ticket CRUD endpoints with the main FastAPI app.
+# Register ticket CRUD endpoints with the main FastAPI app
 app.include_router(tickets.router)
 
 
@@ -49,5 +49,5 @@ def health_check(db: Session = Depends(get_db)) -> dict[str, str]:
             detail="Database connection failed",
         ) from exc
 
-    # if the query succeeds report that the service is healthy.
+    # if the query succeeds report that the service is healthy
     return {"status": "healthy"}
