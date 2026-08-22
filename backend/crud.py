@@ -2,13 +2,14 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from . import models, schemas
+from . import models, schemas, ticket_logic
 
 
 # Create and persist a new ticket record.
 def create_ticket(db: Session, ticket: schemas.TicketCreate) -> models.Ticket:
     # Convert the validated Pydantic schema into a SQLAlchemy model.
-    db_ticket = models.Ticket(**ticket.model_dump())
+    ticket_data = ticket_logic.build_new_ticket_data(db, ticket.model_dump())
+    db_ticket = models.Ticket(**ticket_data)
     db.add(db_ticket)
 
     try:
@@ -42,6 +43,9 @@ def update_ticket(
 ) -> models.Ticket:
     # Only include fields the request actually sent.
     update_data = ticket_update.model_dump(exclude_unset=True)
+
+    # Set system-controlled timestamps when ticket status changes.
+    ticket_logic.apply_status_timestamps(db_ticket, update_data)
 
     # Update each supplied field on the SQLAlchemy model.
     for field, value in update_data.items():
