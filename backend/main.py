@@ -8,9 +8,10 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-# import reusable database session from module
+# Import models so Base.metadata knows which tables to create.
 from . import models
 from .database import Base, engine, get_db
+from .routes import tickets
 
 
 @asynccontextmanager
@@ -20,11 +21,13 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     yield
 
 
-# create FastAPI app and set titlr
+# create FastAPI app and set title
 app = FastAPI(
     title="Cybersecurity Awareness Service Desk API",
     lifespan=lifespan,
 )
+# Register ticket CRUD endpoints with the main FastAPI app.
+app.include_router(tickets.router)
 
 
 # root endpoint
@@ -33,7 +36,7 @@ def read_root() -> dict[str, str]:
     return {"message": "Cybersecurity Awareness Service Desk API"}
 
 
-# health endpoint 
+# health endpoint
 @app.get("/health")
 def health_check(db: Session = Depends(get_db)) -> dict[str, str]:
     try:
