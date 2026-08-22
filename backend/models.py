@@ -67,3 +67,10 @@ class Ticket(Base):
         nullable=True,
     )
     resolution_notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+
+class TicketCounter(Base):
+    __tablename__ = "ticket_counters"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    next_number: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
