@@ -6,15 +6,12 @@ from .enums import AssignedTeam, Department, TicketCategory, TicketPriority, Tic
 
 
 class TicketBase(BaseModel):
-    ticket_number: str = Field(..., max_length=20)
     title: str = Field(..., max_length=200)
     description: str
     requester_name: str = Field(..., max_length=100)
     requester_email: EmailStr
     department: Department
     category: TicketCategory
-    priority: TicketPriority = TicketPriority.MEDIUM
-    assigned_team: AssignedTeam
 
 
 class TicketCreate(TicketBase):
@@ -34,7 +31,10 @@ class TicketUpdate(BaseModel):
 
 class TicketResponse(TicketBase):
     id: int
+    ticket_number: str
+    priority: TicketPriority
     status: TicketStatus
+    assigned_team: AssignedTeam
     created_at: datetime
     updated_at: datetime
     first_response_at: datetime | None = None
