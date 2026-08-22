@@ -32,6 +32,14 @@ The ticket system currently supports information such as:
 - Resolution time
 - Resolution notes
 
+## Current Ticket Workflow
+
+- Automatic sequential ticket numbering
+- Automatic category-based ticket routing
+- Automatic default priority assignment
+- First-response timestamp tracking
+- Resolution timestamp tracking
+
 ## Running the API
 
 From the project root:
@@ -51,6 +59,8 @@ After starting the server, open:
 - http://127.0.0.1:8000/redoc
 
 ## API Endpoints
+
+<!-- Current API routes exposed by the FastAPI backend. -->
 
 - `GET /`
 - `GET /health`
