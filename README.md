@@ -51,6 +51,16 @@ pip install -r backend/requirements.txt
 uvicorn backend.main:app --reload
 ```
 
+## Development Seed Data
+
+Populate the local SQLite database with fictional cybersecurity service-desk tickets for development and testing:
+
+```bash
+python -m backend.seed
+```
+
+The sample tickets use fictional names and example.com email addresses only.
+
 ## API Documentation
 
 After starting the server, open:
@@ -59,8 +69,6 @@ After starting the server, open:
 - http://127.0.0.1:8000/redoc
 
 ## API Endpoints
-
-<!-- Current API routes exposed by the FastAPI backend. -->
 
 - `GET /`
 - `GET /health`
