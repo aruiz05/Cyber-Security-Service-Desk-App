@@ -13,7 +13,9 @@ const pageTitles = {
 
 function Layout() {
   const location = useLocation();
-  const pageTitle = pageTitles[location.pathname] || "Dashboard";
+  const pageTitle = location.pathname.startsWith("/tickets/")
+    ? "Ticket Detail"
+    : pageTitles[location.pathname] || "Dashboard";
 
   return (
     <div className="app-shell">
