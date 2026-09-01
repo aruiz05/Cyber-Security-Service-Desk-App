@@ -303,6 +303,7 @@ p {
 
 .primary-button,
 .secondary-button,
+.danger-button,
 .text-button {
   border-radius: 8px;
   font-weight: 750;
@@ -328,6 +329,17 @@ p {
 
 .secondary-button:hover:not(:disabled) {
   background: #eef3f4;
+}
+
+.danger-button {
+  border: 1px solid #9b2f24;
+  padding: 10px 14px;
+  background: #fff0ee;
+  color: #9b2f24;
+}
+
+.danger-button:hover:not(:disabled) {
+  background: #f9d8d4;
 }
 
 .text-button {
@@ -622,6 +634,24 @@ p {
 .resolution-text {
   color: #4d5a65;
   white-space: pre-wrap;
+}
+
+.destructive-panel {
+  border-color: #efb2aa;
+}
+
+.destructive-panel h3 {
+  margin-top: 4px;
+  color: #172026;
+  font-size: 1.15rem;
+}
+
+.destructive-actions {
+  margin-top: 0;
+}
+
+.delete-error {
+  margin-bottom: 0;
 }
 
 @media (max-width: 780px) {
