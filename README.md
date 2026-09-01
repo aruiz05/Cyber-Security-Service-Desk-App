@@ -18,6 +18,7 @@ The backend is a FastAPI application using SQLAlchemy with a local SQLite databa
 - React
 - Vite
 - React Router
+- Recharts
 
 ## Ticket Data
 
@@ -63,9 +64,9 @@ uvicorn backend.main:app --reload
 
 The frontend is a Vite React application. It currently provides the application layout, navigation, placeholder pages, and backend health connectivity.
 
-The frontend currently supports the ticket queue, search, filtering, sorting, pagination, request submission, ticket detail views, analyst ticket workflow updates, and ticket deletion with confirmation.
+The frontend currently supports the ticket queue, search, filtering, sorting, pagination, request submission, ticket detail views, analyst ticket workflow updates, ticket deletion with confirmation, and an analytics dashboard with KPI summary cards, ticket volume charts, created/resolved trends, SLA compliance visualization, and SLA performance by priority.
 
-The analytics dashboard, reporting features, and knowledge base are not complete yet.
+Reporting features and the knowledge base are not complete yet.
 
 From the project root:
 
