@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import KnowledgeBase from "./pages/KnowledgeBase.jsx";
 import Reports from "./pages/Reports.jsx";
 import SubmitRequest from "./pages/SubmitRequest.jsx";
+import TicketDetail from "./pages/TicketDetail.jsx";
 import Tickets from "./pages/Tickets.jsx";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/tickets" element={<Tickets />} />
+        <Route path="/tickets/:ticketId" element={<TicketDetail />} />
         <Route path="/submit" element={<SubmitRequest />} />
         <Route path="/knowledge" element={<KnowledgeBase />} />
         <Route path="/reports" element={<Reports />} />
