@@ -2,6 +2,7 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 
 # SQLAlchemy is used for a lightweight database
 from sqlalchemy import text
@@ -11,6 +12,7 @@ from sqlalchemy.orm import Session
 # Import models so Base.metadata knows which tables to create
 from . import models
 from .database import Base, engine, get_db
+from .routes import analytics as analytics_routes
 from .routes import tickets
 
 
@@ -26,8 +28,25 @@ app = FastAPI(
     title="Cybersecurity Awareness Service Desk API",
     lifespan=lifespan,
 )
+
+# Allow the local React development server to call the API.
+frontend_origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=frontend_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Register ticket CRUD endpoints with the main FastAPI app
 app.include_router(tickets.router)
+# Register analytics endpoints for dashboard-ready metrics
+app.include_router(analytics_routes.router)
 
 
 # root endpoint
