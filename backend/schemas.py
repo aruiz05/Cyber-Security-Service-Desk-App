@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from enum import Enum
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
@@ -73,3 +73,59 @@ class TicketListResponse(BaseModel):
     page_size: int
     # Number of available pages for the current result set.
     total_pages: int
+
+
+# Response model for GET /analytics/summary.
+class AnalyticsSummary(BaseModel):
+    total_tickets: int
+    open_tickets: int
+    completed_tickets: int
+    tickets_created_today: int
+    tickets_resolved_this_week: int
+    average_response_time_minutes: float
+    average_resolution_time_hours: float
+    sla_compliance_percentage: float
+
+
+# Count of tickets for one category.
+class CategoryCount(BaseModel):
+    category: TicketCategory
+    count: int
+
+
+# Count of tickets for one status.
+class StatusCount(BaseModel):
+    status: TicketStatus
+    count: int
+
+
+# Count of tickets for one priority.
+class PriorityCount(BaseModel):
+    priority: TicketPriority
+    count: int
+
+
+# One day of created/resolved ticket trend data.
+class TrendPoint(BaseModel):
+    date: date
+    created: int
+    resolved: int
+
+
+# SLA metrics for one priority level.
+class SLAPrioritySummary(BaseModel):
+    priority: TicketPriority
+    target_minutes: int
+    met: int
+    breached: int
+    pending: int
+    compliance_percentage: float
+
+
+# Overall SLA metrics plus per-priority breakdown.
+class SLASummary(BaseModel):
+    met: int
+    breached: int
+    pending: int
+    compliance_percentage: float
+    by_priority: list[SLAPrioritySummary]
