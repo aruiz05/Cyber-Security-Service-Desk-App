@@ -97,3 +97,27 @@ export async function deleteTicket(ticketId) {
     method: "DELETE",
   });
 }
+
+export async function getAnalyticsSummary() {
+  return apiRequest("/analytics/summary");
+}
+
+export async function getCategoryAnalytics() {
+  return apiRequest("/analytics/categories");
+}
+
+export async function getStatusAnalytics() {
+  return apiRequest("/analytics/status");
+}
+
+export async function getPriorityAnalytics() {
+  return apiRequest("/analytics/priorities");
+}
+
+export async function getTrends(days = 30) {
+  return apiRequest(`/analytics/trends?days=${days}`);
+}
+
+export async function getSLAAnalytics() {
+  return apiRequest("/analytics/sla");
+}
