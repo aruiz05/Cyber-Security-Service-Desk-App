@@ -14,6 +14,10 @@ The backend is a FastAPI application using SQLAlchemy with a local SQLite databa
 - SQLite
 - Pydantic
 - Uvicorn
+- JavaScript
+- React
+- Vite
+- React Router
 
 ## Ticket Data
 
@@ -39,6 +43,10 @@ The ticket system currently supports information such as:
 - Automatic default priority assignment
 - First-response timestamp tracking
 - Resolution timestamp tracking
+- Ticket filtering, search, sorting, and pagination
+- SLA tracking and compliance metrics
+- Backend ticket analytics by category, status, and priority
+- Ticket creation and resolution trends
 
 ## Running the API
 
@@ -49,6 +57,20 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r backend/requirements.txt
 uvicorn backend.main:app --reload
+```
+
+## Frontend Setup
+
+The frontend is a Vite React application. It currently provides the application layout, navigation, placeholder pages, and backend health connectivity.
+
+The ticket-management frontend and analytics dashboard are not complete yet.
+
+From the project root:
+
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
 ## Development Seed Data
@@ -77,3 +99,20 @@ After starting the server, open:
 - `GET /tickets/{ticket_id}`
 - `PATCH /tickets/{ticket_id}`
 - `DELETE /tickets/{ticket_id}`
+- `GET /analytics/summary`
+- `GET /analytics/categories`
+- `GET /analytics/status`
+- `GET /analytics/priorities`
+- `GET /analytics/trends`
+- `GET /analytics/sla`
+
+## Ticket Queue Examples
+
+- `GET /tickets?status=New`
+- `GET /tickets?category=Phishing`
+- `GET /tickets?priority=Critical`
+- `GET /tickets?department=Finance`
+- `GET /tickets?assigned_team=Human Risk Management`
+- `GET /tickets?search=Microsoft`
+- `GET /tickets?sort_by=ticket_number&sort_order=asc`
+- `GET /tickets?page=2&page_size=10`
