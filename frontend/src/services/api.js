@@ -3,12 +3,97 @@ const configuredBaseUrl =
 
 export const API_BASE_URL = configuredBaseUrl.replace(/\/$/, "");
 
-export async function checkHealth() {
-  const response = await fetch(`${API_BASE_URL}/health`);
-
-  if (!response.ok) {
-    throw new Error(`Health check failed with status ${response.status}`);
+async function getResponseData(response) {
+  if (response.status === 204) {
+    return null;
   }
 
-  return response.json();
+  const contentType = response.headers.get("content-type") || "";
+
+  if (contentType.includes("application/json")) {
+    return response.json();
+  }
+
+  return response.text();
+}
+
+function getErrorMessage(response, responseData) {
+  if (typeof responseData?.detail === "string") {
+    return responseData.detail;
+  }
+
+  if (Array.isArray(responseData?.detail)) {
+    return "Please check the submitted fields and try again.";
+  }
+
+  if (typeof responseData === "string" && responseData.trim()) {
+    return responseData;
+  }
+
+  return `Request failed with status ${response.status}`;
+}
+
+async function apiRequest(path, options = {}) {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    ...options,
+    headers: {
+      ...(options.body ? { "Content-Type": "application/json" } : {}),
+      ...options.headers,
+    },
+  });
+
+  const responseData = await getResponseData(response);
+
+  if (!response.ok) {
+    throw new Error(getErrorMessage(response, responseData));
+  }
+
+  return responseData;
+}
+
+function buildQueryString(params = {}) {
+  const searchParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      searchParams.set(key, value);
+    }
+  });
+
+  return searchParams.toString();
+}
+
+export async function checkHealth() {
+  return apiRequest("/health");
+}
+
+export async function getTickets(params = {}) {
+  const queryString = buildQueryString(params);
+  const path = queryString ? `/tickets?${queryString}` : "/tickets";
+
+  return apiRequest(path);
+}
+
+export async function getTicket(ticketId) {
+  return apiRequest(`/tickets/${ticketId}`);
+}
+
+export async function createTicket(data) {
+  return apiRequest("/tickets", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateTicket(ticketId, data) {
+  return apiRequest(`/tickets/${ticketId}`, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteTicket(ticketId) {
+  return apiRequest(`/tickets/${ticketId}`, {
+    method: "DELETE",
+  });
 }
