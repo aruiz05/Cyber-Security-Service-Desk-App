@@ -20,6 +20,13 @@ env/
 # Environment variables
 .env
 .env.*
+!.env.example
+!frontend/.env.example
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
 
 # SQLite
 cybersecurity_service_desk.db
