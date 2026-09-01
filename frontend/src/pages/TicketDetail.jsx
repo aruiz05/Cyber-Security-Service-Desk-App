@@ -7,7 +7,7 @@ import {
   TICKET_PRIORITIES,
   TICKET_STATUSES,
 } from "../constants/tickets.js";
-import { getTicket, updateTicket } from "../services/api.js";
+import { deleteTicket, getTicket, updateTicket } from "../services/api.js";
 import { formatDateTime } from "../utils/format.js";
 
 function TicketDetail() {
@@ -22,9 +22,11 @@ function TicketDetail() {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
   const [saveError, setSaveError] = useState("");
+  const [deleteError, setDeleteError] = useState("");
   const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
@@ -101,6 +103,7 @@ function TicketDetail() {
     }));
     setSaveMessage("");
     setSaveError("");
+    setDeleteError("");
   }
 
   async function saveChanges(event) {
@@ -128,6 +131,32 @@ function TicketDetail() {
       setSaveError(requestError.message || "Unable to update ticket.");
     } finally {
       setIsSaving(false);
+    }
+  }
+
+  async function handleDeleteTicket() {
+    if (isDeleting) {
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Delete ticket ${ticket.ticket_number}?\n\nThis action cannot be undone.`,
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setIsDeleting(true);
+    setDeleteError("");
+
+    try {
+      await deleteTicket(ticketId);
+      navigate("/tickets");
+    } catch (requestError) {
+      setDeleteError(requestError.message || "Unable to delete ticket.");
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -322,6 +351,31 @@ function TicketDetail() {
           </button>
         </div>
       </form>
+
+      <div className="panel detail-panel destructive-panel">
+        <div>
+          <p className="panel-label">Destructive Action</p>
+          <h3>Delete Ticket</h3>
+          <p className="supporting-text">
+            Permanently remove {ticket.ticket_number} from the ticket queue.
+          </p>
+        </div>
+
+        {deleteError ? (
+          <div className="form-error delete-error">{deleteError}</div>
+        ) : null}
+
+        <div className="button-row destructive-actions">
+          <button
+            className="danger-button"
+            type="button"
+            disabled={isDeleting}
+            onClick={handleDeleteTicket}
+          >
+            {isDeleting ? "Deleting..." : "Delete Ticket"}
+          </button>
+        </div>
+      </div>
     </section>
   );
 }
