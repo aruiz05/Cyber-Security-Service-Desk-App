@@ -63,7 +63,9 @@ uvicorn backend.main:app --reload
 
 The frontend is a Vite React application. It currently provides the application layout, navigation, placeholder pages, and backend health connectivity.
 
-The ticket-management frontend and analytics dashboard are not complete yet.
+The frontend currently supports the ticket queue, search, filtering, sorting, pagination, request submission, ticket detail views, analyst ticket workflow updates, and ticket deletion with confirmation.
+
+The analytics dashboard, reporting features, and knowledge base are not complete yet.
 
 From the project root:
 
