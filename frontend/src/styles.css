@@ -1,0 +1,267 @@
+:root {
+  color: #172026;
+  background: #f4f6f7;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-synthesis: none;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #f4f6f7;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 264px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 28px 18px;
+  background: #20242a;
+  border-right: 1px solid #111418;
+  color: #f6f8f9;
+}
+
+.sidebar-brand {
+  display: grid;
+  gap: 3px;
+  padding: 0 10px 18px;
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+}
+
+.brand-kicker {
+  color: #8fd3c7;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.brand-name {
+  font-size: 1.35rem;
+  font-weight: 750;
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 8px;
+}
+
+.nav-link {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  padding: 11px 12px;
+  color: #d8dde2;
+  font-weight: 650;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.nav-link:hover {
+  background: rgb(255 255 255 / 8%);
+  color: #ffffff;
+}
+
+.nav-link-active {
+  background: #e8f6f2;
+  color: #12201d;
+}
+
+.content-shell {
+  min-width: 0;
+  background: #f4f6f7;
+}
+
+.top-header {
+  display: flex;
+  align-items: center;
+  min-height: 86px;
+  padding: 22px 32px;
+  background: #ffffff;
+  border-bottom: 1px solid #dce3e8;
+}
+
+.header-kicker,
+.eyebrow,
+.panel-label {
+  color: #66727d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.top-header h1 {
+  margin-top: 3px;
+  color: #172026;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.page-content {
+  width: min(1120px, 100%);
+  padding: 32px;
+}
+
+.page-stack {
+  display: grid;
+  gap: 22px;
+}
+
+.section-heading {
+  display: grid;
+  gap: 5px;
+}
+
+.section-heading h2 {
+  color: #172026;
+  font-size: 1.65rem;
+  line-height: 1.25;
+}
+
+.panel {
+  border: 1px solid #dce3e8;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgb(23 32 38 / 6%);
+}
+
+.status-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px;
+}
+
+.status-panel h3 {
+  margin-top: 4px;
+  color: #172026;
+  font-size: 1.3rem;
+}
+
+.supporting-text {
+  margin-top: 6px;
+  color: #66727d;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  border: 1px solid #dce3e8;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  margin-right: 9px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.status-checking {
+  background: #fff8e6;
+  border-color: #f3d58b;
+  color: #8a5d12;
+}
+
+.status-connected {
+  background: #e8f6f2;
+  border-color: #a5d8cd;
+  color: #176457;
+}
+
+.status-unavailable {
+  background: #fff0ee;
+  border-color: #efb2aa;
+  color: #9b2f24;
+}
+
+.placeholder-panel {
+  display: grid;
+  gap: 8px;
+  padding: 24px;
+}
+
+.placeholder-panel h2 {
+  color: #172026;
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.placeholder-panel p:last-child {
+  color: #4d5a65;
+}
+
+@media (max-width: 780px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    gap: 18px;
+    padding: 20px;
+  }
+
+  .sidebar-brand {
+    padding: 0 0 14px;
+  }
+
+  .sidebar-nav {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .top-header {
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .page-content {
+    padding: 20px;
+  }
+
+  .status-panel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .status-badge {
+    width: 100%;
+    min-width: 0;
+    white-space: normal;
+  }
+}
