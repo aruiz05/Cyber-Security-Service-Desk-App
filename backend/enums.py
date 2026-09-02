@@ -13,6 +13,17 @@ class TicketCategory(str, Enum):
     OTHER = "Other"
 
 
+class KnowledgeCategory(str, Enum):
+    PHISHING = "Phishing"
+    SOCIAL_ENGINEERING = "Social Engineering"
+    PASSWORD_SECURITY = "Password Security"
+    DATA_PROTECTION = "Data Protection"
+    SECURITY_AWARENESS = "Security Awareness"
+    SECURITY_TRAINING = "Security Training"
+    ACCOUNT_SECURITY = "Account Security"
+    GENERAL_SECURITY = "General Security"
+
+
 class TicketPriority(str, Enum):
     LOW = "Low"
     MEDIUM = "Medium"
