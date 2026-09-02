@@ -1,14 +1,14 @@
 # Cybersecurity Awareness Service Desk
 
-Cybersecurity Awareness Service Desk is a portfolio project that simulates an enterprise cybersecurity awareness and service-desk request management system. Employees can submit cybersecurity requests, while analysts can triage, manage, resolve, measure, and report on tickets.
+Cybersecurity Awareness Service Desk is a portfolio project that simulates an enterprise cybersecurity awareness and service desk request management system. Employees can submit cybersecurity requests, while analysts can triage, manage, resolve, measure, and report on tickets.
 
-The application is designed as a full-stack local demo with a React frontend, a FastAPI REST API, and a SQLite development database.
+The application is designed as a full local demo with a React frontend, a FastAPI REST API, and a SQLite development database.
 
 ## Features
 
 ### Ticket Management
 
-- Submit cybersecurity awareness and security-support requests
+- Submit cybersecurity awareness and security support requests
 - Generate sequential ticket numbers automatically
 - Route tickets to the correct security team based on category
 - Assign default priority based on category
@@ -20,7 +20,7 @@ The application is designed as a full-stack local demo with a React frontend, a 
 
 - Track first response time automatically
 - Track resolution time automatically
-- Evaluate first-response SLA status
+- Evaluate first response SLA status
 - Report SLA compliance overall and by priority
 
 ### Analytics
@@ -74,7 +74,7 @@ The application is designed as a full-stack local demo with a React frontend, a 
 
 ## Architecture
 
-The project uses a simple full-stack architecture:
+The project uses a simple full stack architecture:
 
 ```text
 React frontend
@@ -136,14 +136,14 @@ backend/
   analytics.py         Dashboard analytics calculations
   reports.py           CSV report generation
   seed.py              Development seed entry point
-  knowledge_seed.py    Knowledge-base seed data
+  knowledge_seed.py    Knowledge base seed data
   routes/              FastAPI route modules
 
 frontend/
   src/
     components/        Shared React UI components
     constants/         Shared frontend option lists
-    pages/             Route-level React pages
+    pages/             Route level React pages
     services/          API client functions
     utils/             Formatting helpers
     App.jsx            React Router configuration
@@ -206,7 +206,7 @@ For local development, the frontend falls back to `http://127.0.0.1:8000` when `
 
 ## Development Seed Data
 
-After activating the Python virtual environment, populate the local SQLite database with fictional tickets and knowledge-base articles:
+After activating the Python virtual environment, populate the local SQLite database with fictional tickets and knowledge base articles:
 
 ```bash
 python -m backend.seed
@@ -248,13 +248,13 @@ After starting the backend, open:
 | GET | `/analytics/status` | Ticket counts by status |
 | GET | `/analytics/priorities` | Ticket counts by priority |
 | GET | `/analytics/trends` | Created and resolved ticket trends |
-| GET | `/analytics/sla` | Overall and per-priority SLA performance |
+| GET | `/analytics/sla` | Overall and per priority SLA performance |
 
 ### Knowledge Base
 
 | Method | Endpoint | Purpose |
 | --- | --- | --- |
-| POST | `/knowledge` | Create a knowledge-base article |
+| POST | `/knowledge` | Create a knowledge base article |
 | GET | `/knowledge` | List articles with search and category filtering |
 | GET | `/knowledge/{article_id}` | Retrieve one article |
 | PATCH | `/knowledge/{article_id}` | Update an article |
@@ -306,11 +306,11 @@ Add real screenshots captured from the running application. Do not use mock or f
 
 ## Future Improvements
 
-- Authentication and role-based access control
-- PostgreSQL for production-style database usage
+- Authentication and role based access control
+- PostgreSQL for production style database usage
 - Docker/container deployment
 - Email or Microsoft Teams notifications
 - Ticket audit history
 - ServiceNow integration
-- AI-assisted ticket classification or summarization
+- AI assisted ticket classification or summarization
 - Cloud deployment
