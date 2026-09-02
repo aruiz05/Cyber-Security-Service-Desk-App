@@ -7,7 +7,7 @@ from ..database import get_db
 from ..enums import AssignedTeam, Department, TicketCategory, TicketPriority, TicketStatus
 
 
-# Router groups all ticket endpoints under /tickets in Swagge
+# Router groups all ticket endpoints under /tickets in Swagger.
 router = APIRouter(prefix="/tickets", tags=["Tickets"])
 
 

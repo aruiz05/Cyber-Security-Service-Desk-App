@@ -227,22 +227,6 @@ p {
   color: #9b2f24;
 }
 
-.placeholder-panel {
-  display: grid;
-  gap: 8px;
-  padding: 24px;
-}
-
-.placeholder-panel h2 {
-  color: #172026;
-  font-size: 1.35rem;
-  line-height: 1.25;
-}
-
-.placeholder-panel p:last-child {
-  color: #4d5a65;
-}
-
 .ticket-controls {
   display: grid;
   grid-template-columns: minmax(260px, 2fr) repeat(6, minmax(150px, 1fr)) auto;
