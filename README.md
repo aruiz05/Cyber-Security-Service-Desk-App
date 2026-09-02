@@ -37,6 +37,17 @@ The ticket system currently supports information such as:
 - Resolution time
 - Resolution notes
 
+## Knowledge Base
+
+The knowledge base supports internal cybersecurity guidance articles with:
+
+- Title and summary
+- Full article content
+- Security guidance category
+- Creation and update timestamps
+- Search and category filtering
+- Article creation, editing, and deletion
+
 ## Current Ticket Workflow
 
 - Automatic sequential ticket numbering
@@ -48,6 +59,7 @@ The ticket system currently supports information such as:
 - SLA tracking and compliance metrics
 - Backend ticket analytics by category, status, and priority
 - Ticket creation and resolution trends
+- Filtered CSV ticket report exports
 
 ## Running the API
 
@@ -62,11 +74,9 @@ uvicorn backend.main:app --reload
 
 ## Frontend Setup
 
-The frontend is a Vite React application. It currently provides the application layout, navigation, placeholder pages, and backend health connectivity.
+The frontend is a Vite React application. It provides the application layout, navigation, dashboard, ticket workflow, knowledge base, reports page, and backend health connectivity.
 
-The frontend currently supports the ticket queue, search, filtering, sorting, pagination, request submission, ticket detail views, analyst ticket workflow updates, ticket deletion with confirmation, and an analytics dashboard with KPI summary cards, ticket volume charts, created/resolved trends, SLA compliance visualization, and SLA performance by priority.
-
-Reporting features and the knowledge base are not complete yet.
+The frontend currently supports the ticket queue, search, filtering, sorting, pagination, request submission, ticket detail views, analyst ticket workflow updates, ticket deletion with confirmation, a knowledge-base browser with article management, a CSV reports workflow, and an analytics dashboard with KPI summary cards, ticket volume charts, created/resolved trends, SLA compliance visualization, and SLA performance by priority.
 
 From the project root:
 
@@ -78,13 +88,13 @@ npm run dev
 
 ## Development Seed Data
 
-Populate the local SQLite database with fictional cybersecurity service-desk tickets for development and testing:
+Populate the local SQLite database with fictional cybersecurity service-desk tickets and knowledge-base articles for development and testing:
 
 ```bash
 python -m backend.seed
 ```
 
-The sample tickets use fictional names and example.com email addresses only.
+The sample tickets use fictional names and example.com email addresses only. Knowledge-base articles are fictional defensive guidance examples.
 
 ## API Documentation
 
@@ -108,6 +118,12 @@ After starting the server, open:
 - `GET /analytics/priorities`
 - `GET /analytics/trends`
 - `GET /analytics/sla`
+- `POST /knowledge`
+- `GET /knowledge`
+- `GET /knowledge/{article_id}`
+- `PATCH /knowledge/{article_id}`
+- `DELETE /knowledge/{article_id}`
+- `GET /reports/tickets.csv`
 
 ## Ticket Queue Examples
 
@@ -119,3 +135,16 @@ After starting the server, open:
 - `GET /tickets?search=Microsoft`
 - `GET /tickets?sort_by=ticket_number&sort_order=asc`
 - `GET /tickets?page=2&page_size=10`
+
+## Knowledge Base Examples
+
+- `GET /knowledge`
+- `GET /knowledge?category=Phishing`
+- `GET /knowledge?search=password`
+
+## Report Examples
+
+- `GET /reports/tickets.csv`
+- `GET /reports/tickets.csv?status=Resolved`
+- `GET /reports/tickets.csv?category=Phishing&priority=High`
+- `GET /reports/tickets.csv?start_date=2026-01-01&end_date=2026-01-31`

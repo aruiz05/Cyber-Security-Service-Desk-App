@@ -5,7 +5,14 @@ from sqlalchemy import DateTime, Enum as SQLAlchemyEnum, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .database import Base
-from .enums import AssignedTeam, Department, TicketCategory, TicketPriority, TicketStatus
+from .enums import (
+    AssignedTeam,
+    Department,
+    KnowledgeCategory,
+    TicketCategory,
+    TicketPriority,
+    TicketStatus,
+)
 
 
 def utc_now() -> datetime:
@@ -74,3 +81,28 @@ class TicketCounter(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     next_number: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+
+
+class KnowledgeArticle(Base):
+    __tablename__ = "knowledge_articles"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    title: Mapped[str] = mapped_column(String(200), nullable=False, index=True)
+    summary: Mapped[str] = mapped_column(String(500), nullable=False)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    category: Mapped[KnowledgeCategory] = mapped_column(
+        SQLAlchemyEnum(KnowledgeCategory, values_callable=enum_values),
+        nullable=False,
+        index=True,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=utc_now,
+        nullable=False,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=utc_now,
+        onupdate=utc_now,
+        nullable=False,
+    )

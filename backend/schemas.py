@@ -3,7 +3,14 @@ from enum import Enum
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
-from .enums import AssignedTeam, Department, TicketCategory, TicketPriority, TicketStatus
+from .enums import (
+    AssignedTeam,
+    Department,
+    KnowledgeCategory,
+    TicketCategory,
+    TicketPriority,
+    TicketStatus,
+)
 
 
 # Allowed fields clients can use when sorting the ticket queue.
@@ -129,3 +136,29 @@ class SLASummary(BaseModel):
     pending: int
     compliance_percentage: float
     by_priority: list[SLAPrioritySummary]
+
+
+class KnowledgeArticleBase(BaseModel):
+    title: str = Field(..., max_length=200)
+    summary: str = Field(..., max_length=500)
+    content: str
+    category: KnowledgeCategory
+
+
+class KnowledgeArticleCreate(KnowledgeArticleBase):
+    pass
+
+
+class KnowledgeArticleUpdate(BaseModel):
+    title: str | None = Field(default=None, max_length=200)
+    summary: str | None = Field(default=None, max_length=500)
+    content: str | None = None
+    category: KnowledgeCategory | None = None
+
+
+class KnowledgeArticleResponse(KnowledgeArticleBase):
+    id: int
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)

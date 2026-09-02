@@ -63,6 +63,11 @@ function buildQueryString(params = {}) {
   return searchParams.toString();
 }
 
+function getFilenameFromContentDisposition(contentDisposition) {
+  const filenameMatch = contentDisposition?.match(/filename="?([^"]+)"?/i);
+  return filenameMatch?.[1] || "cybersecurity_ticket_report.csv";
+}
+
 export async function checkHealth() {
   return apiRequest("/health");
 }
@@ -98,6 +103,37 @@ export async function deleteTicket(ticketId) {
   });
 }
 
+export async function getKnowledgeArticles(params = {}) {
+  const queryString = buildQueryString(params);
+  const path = queryString ? `/knowledge?${queryString}` : "/knowledge";
+
+  return apiRequest(path);
+}
+
+export async function getKnowledgeArticle(articleId) {
+  return apiRequest(`/knowledge/${articleId}`);
+}
+
+export async function createKnowledgeArticle(data) {
+  return apiRequest("/knowledge", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateKnowledgeArticle(articleId, data) {
+  return apiRequest(`/knowledge/${articleId}`, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteKnowledgeArticle(articleId) {
+  return apiRequest(`/knowledge/${articleId}`, {
+    method: "DELETE",
+  });
+}
+
 export async function getAnalyticsSummary() {
   return apiRequest("/analytics/summary");
 }
@@ -120,4 +156,33 @@ export async function getTrends(days = 30) {
 
 export async function getSLAAnalytics() {
   return apiRequest("/analytics/sla");
+}
+
+export async function downloadTicketReport(params = {}) {
+  const queryString = buildQueryString(params);
+  const path = queryString
+    ? `/reports/tickets.csv?${queryString}`
+    : "/reports/tickets.csv";
+  const response = await fetch(`${API_BASE_URL}${path}`);
+
+  if (!response.ok) {
+    const responseData = await getResponseData(response);
+    throw new Error(getErrorMessage(response, responseData));
+  }
+
+  const csvBlob = await response.blob();
+  const downloadUrl = window.URL.createObjectURL(csvBlob);
+  const downloadLink = document.createElement("a");
+  const filename = getFilenameFromContentDisposition(
+    response.headers.get("content-disposition"),
+  );
+
+  downloadLink.href = downloadUrl;
+  downloadLink.download = filename;
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  downloadLink.remove();
+  window.URL.revokeObjectURL(downloadUrl);
+
+  return { filename };
 }

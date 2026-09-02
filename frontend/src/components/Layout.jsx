@@ -13,9 +13,15 @@ const pageTitles = {
 
 function Layout() {
   const location = useLocation();
-  const pageTitle = location.pathname.startsWith("/tickets/")
-    ? "Ticket Detail"
-    : pageTitles[location.pathname] || "Dashboard";
+  let pageTitle = pageTitles[location.pathname] || "Dashboard";
+
+  if (location.pathname.startsWith("/tickets/")) {
+    pageTitle = "Ticket Detail";
+  }
+
+  if (location.pathname.startsWith("/knowledge/")) {
+    pageTitle = "Knowledge Article";
+  }
 
   return (
     <div className="app-shell">

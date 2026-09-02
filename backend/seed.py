@@ -6,7 +6,7 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from . import models, schemas, ticket_logic
+from . import knowledge_seed, models, schemas, ticket_logic
 from .database import Base, SessionLocal, engine
 from .enums import Department, TicketCategory, TicketStatus
 
@@ -527,25 +527,29 @@ def seed_database() -> None:
         if seed_already_exists(db):
             print("Database already contains the development seed dataset.")
             print("Seed operation skipped.")
-            return
+        else:
+            created_tickets = []
 
-        created_tickets = []
+            try:
+                # Build all seed tickets before committing any of them.
+                for index, seed_ticket in enumerate(SEED_TICKETS):
+                    created_tickets.append(create_seed_ticket(db, seed_ticket, index))
 
-        try:
-            # Build all seed tickets before committing any of them.
-            for index, seed_ticket in enumerate(SEED_TICKETS):
-                created_tickets.append(create_seed_ticket(db, seed_ticket, index))
+                # Flush assigns generated values so validation can inspect them.
+                db.flush()
+                validate_seeded_tickets(created_tickets)
+                db.commit()
+            except (IntegrityError, ValidationError, ValueError) as exc:
+                # Roll back so a failed seed run does not leave partial data.
+                db.rollback()
+                raise RuntimeError("Seed operation failed. No seed tickets were saved.") from exc
 
-            # Flush assigns generated values so validation can inspect them.
-            db.flush()
-            validate_seeded_tickets(created_tickets)
-            db.commit()
-        except (IntegrityError, ValidationError, ValueError) as exc:
-            # Roll back so a failed seed run does not leave partial data.
-            db.rollback()
-            raise RuntimeError("Seed operation failed. No seed tickets were saved.") from exc
+            print_summary(created_tickets)
 
-        print_summary(created_tickets)
+        # Add any missing knowledge-base articles without touching existing ones.
+        created_articles = knowledge_seed.seed_knowledge_articles(db)
+        print()
+        print(f"Knowledge articles created: {created_articles}")
 
 
 # Allows the script to run with: python -m backend.seed

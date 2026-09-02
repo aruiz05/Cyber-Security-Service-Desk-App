@@ -13,6 +13,8 @@ from sqlalchemy.orm import Session
 from . import models
 from .database import Base, engine, get_db
 from .routes import analytics as analytics_routes
+from .routes import knowledge
+from .routes import reports
 from .routes import tickets
 
 
@@ -47,6 +49,10 @@ app.add_middleware(
 app.include_router(tickets.router)
 # Register analytics endpoints for dashboard-ready metrics
 app.include_router(analytics_routes.router)
+# Register knowledge-base endpoints for article browsing and management
+app.include_router(knowledge.router)
+# Register reporting endpoints for CSV exports
+app.include_router(reports.router)
 
 
 # root endpoint
