@@ -286,16 +286,30 @@ GET /reports/tickets.csv?start_date=2026-01-01&end_date=2026-01-31
 
 ## Screenshots
 
-No screenshot files are currently included in this repository. Recommended screenshots to add before publishing the GitHub repository:
 
-- `docs/screenshots/dashboard.png`
-- `docs/screenshots/tickets.png`
-- `docs/screenshots/ticket-detail.png`
-- `docs/screenshots/submit-request.png`
-- `docs/screenshots/knowledge-base.png`
-- `docs/screenshots/reports.png`
+### Dashboard
 
-Add real screenshots captured from the running application. Do not use mock or fabricated screenshots.
+<img src="screenshots/Dashboard1.png" width="900">
+
+<img src="screenshots/Dashboard2.png" width="900">
+
+<img src="screenshots/Dashboard3.png" width="900">
+
+### Tickets
+
+<img src="screenshots/Tickets.png" width="900">
+
+### Submit Request
+
+<img src="screenshots/Submit-Request.png" width="900">
+
+### Knowledge Base
+
+<img src="screenshots/KB.png" width="900">
+
+### Reports
+
+<img src="screenshots/Reports.png" width="900">
 
 ## Development Notes
 
